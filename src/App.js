@@ -1,25 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Container, Row } from 'reactstrap';
+import Header from './Components/Header';
+import MultiForm from './Components/Form';
+import AdminPanel from './Components/Admin';
+import AuthWrapper from "./Components/AuthContext";
+import ModeratorAuth from "./Components/ModeratorAuth";
+import ModeratorWrapper from "./Components/ModeratorContext";
+import Moderator from "./Components/Moderator";
+import Main from './Components/Main';
+import BecomeModerator from "./Components/BecomeModerator";
+import AddPointByModeratorWrap from './Components/AddPointByModerator';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ModeratorWrapper>
+      <AuthWrapper>
+        <Header />
+        <Container>
+          <Row>
+            <AddPointByModeratorWrap>
+              <Switch>
+                <Route exact path='/' component={Main}/>
+                <Route exact path={['/login','/register']} component={MultiForm} />
+                <Route exact path="/admin" component={AdminPanel}/>
+                <Route exact path="/moderator-auth" component={ModeratorAuth}/>
+                <Route exact path="/moderator" component={Moderator}/>
+
+              </Switch>
+            </AddPointByModeratorWrap>
+          </Row>
+        </Container>
+      </AuthWrapper>
+      </ModeratorWrapper>
+    </BrowserRouter>
   );
 }
 
